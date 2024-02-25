@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 
-  
-//create your first component
 const Home = () => {
 	const [inputValue, setInputValue] = useState("");
 	const [todos, setTodos] = useState([]);
@@ -10,12 +8,19 @@ const Home = () => {
 	// Delete into array-> filter
 	// Update into array-> map
 
+	const changeInputValue = (e) =>{setInputValue(e.target.value)};
+
 	const inputKeyPress = (event) => {
 		if (event.key === "Enter") {
 			setTodos([...todos,inputValue])
 			setInputValue("")
 		}
 	};
+
+	const deleteEvent = (index) => {
+		const listaActualizada = todos.filter((t, currentIndex) => index !== currentIndex)
+		setTodos(listaActualizada)
+	}
 
 	return (
 		<div className="container">
@@ -26,7 +31,7 @@ const Home = () => {
 				type="text"
 				placeholder="What do you need to do?"
 				value={inputValue}
-				onChange={(e)=> setInputValue(e.target.value)}
+				onChange={changeInputValue}
 				onKeyDown={inputKeyPress}
 				/>   
 				</li>
@@ -36,7 +41,7 @@ const Home = () => {
    				{item}
 				<button
 					className="btn btn-light"
-					onClick={() => setTodos(todos.filter((t, currentIndex) => index !== currentIndex))}>X</button>
+					onClick={() => deleteEvent(index)}>X</button>
 				</li>
 				))}
 			</ul>
